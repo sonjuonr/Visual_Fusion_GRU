@@ -1,6 +1,6 @@
 # 🐟 Visual-Fusion-GRU: Attention-Based Underwater Navigation
 
-![Status](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z5eGk2aHlucTM2Z2c2bW54Z2g2aHkmaGVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/L1R1TVThqceK6jD79f/giphy.gif)
+![Work In Progress](https://media.giphy.com/media/13HgwGsXF0aiGY/giphy.gif)
 
 > **Status:** Active Development (Phase 2: Network Architecture Implementation)
 
@@ -46,7 +46,7 @@ graph TD
     subgraph Memory_Policy [Temporal Decision]
         FUSE[Weighted Fusion]
         GRU[GRU Memory Cell]
-        ACT[Action Head (PPO)]
+        ACT["Action Head (PPO)"]
     end
 
     IMG --> CNN --> FUSE
