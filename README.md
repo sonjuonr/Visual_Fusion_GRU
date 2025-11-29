@@ -16,7 +16,7 @@ Current environment setup in Unity, showcasing the **Robot Fish's POV (Camera Se
 
 [**👉 Click here to watch the Initial Simulation Video**](https://github.com/sonjuonr/Visual_Fusion_GRU/blob/main/initial%20simulation%202025-11-30_013224_200.mp4)
 
-*(The video demonstrates the agent passing an obstacle, visualized through the grayscale camera input fed into the CNN.)*
+*(The video demonstrates the agent passing an obstacle。)*
 
 ---
 
