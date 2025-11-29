@@ -1,6 +1,7 @@
 # 🐟 Visual-Fusion-GRU: Attention-Based Underwater Navigation
 
-![Work In Progress](https://media.giphy.com/media/13HgwGsXF0aiGY/giphy.gif)
+![Status](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z5eGk2aHlucTM2Z2c2bW54Z2g2aHkmaGVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/L1R1TVThqceK6jD79f/giphy.gif)
+
 > **Status:** Active Development (Phase 2: Network Architecture Implementation)
 
 **Visual-Fusion-GRU** is a deep reinforcement learning framework designed for autonomous robotic fish navigation in turbid underwater environments. 
@@ -28,8 +29,8 @@ The core innovation of this project is the **Multi-Modal Gating Network**. Inste
 ```mermaid
 graph TD
     subgraph Environment [Unity URP Environment]
-        IMG[Camera Input (64x64 Grayscale)]
-        VEC[Vector Input (Sonar + State)]
+        IMG["Camera Input (64x64 Grayscale)"]
+        VEC["Vector Input (Sonar + State)"]
     end
 
     subgraph Encoders [Feature Extraction]
