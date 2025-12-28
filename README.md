@@ -12,13 +12,17 @@ It addresses the challenge of **sensor reliability**—where visual data degrade
 
 ## 🎥 Simulation Demo
 
-Current environment setup in Unity, showcasing the **Robot Fish's POV (Camera Sensor)** and the **physically simulated underwater environment**.
+Current environment setup in isaac-sim, showcasing the **Robot Fish's POV (Camera Sensor)** , **perspective POV with lidar** and the **physically simulated underwater environment**.
 
-[**👉 Click here to watch the Initial Simulation Video**](https://github.com/sonjuonr/Visual_Fusion_GRU/blob/main/initial%20simulation%202025-11-30_013224_200.mp4)
+[**👉 Click here to watch the Initial Simulation Video**]([https://github.com/sonjuonr/Visual_Fusion_GRU/blob/main/initial%20simulation%202025-11-30_013224_200.mp4](https://github.com/sonjuonr/Visual_Fusion_GRU/blob/main/initial%20simulation%202025-11-30_013224_200.mp4))
 
 *(The video demonstrates the agent passing an obstacle。)*
 
 ---
+## Small test in simulation environment
+mission decription: An underwater capsule robot learns to navigate toward a target object 5 meters away by processing 360-degree LiDAR scan data and relative goal coordinates to output continuous 2D movement actions using the PPO algorithm.  
+
+[**👉 here is the RL Simulation Gif**]([[**👉 Click here to watch the Initial Simulation Video**](https://github.com/sonjuonr/Visual_Fusion_GRU/blob/main/1.gif)
 
 ## 🧠 Proposed System Architecture
 
