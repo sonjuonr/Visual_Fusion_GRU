@@ -1,0 +1,29 @@
+{
+  "model": {
+    "input_dim": 196,
+    "hidden_dims": [
+      256,
+      128
+    ],
+    "dropout": 0.0,
+    "activation": "relu"
+  },
+  "dataset_paths": [
+    "imitation_data/teacher_seed/teacher_seed_dataset.npz"
+  ],
+  "output_path": "models/student_bc.pt",
+  "resume_from": null,
+  "batch_size": 512,
+  "epochs": 25,
+  "learning_rate": 0.001,
+  "weight_decay": 0.0001,
+  "val_ratio": 0.1,
+  "num_workers": 0,
+  "shuffle_seed": 42,
+  "class_weighting": "balanced",
+  "device": "cpu",
+  "tensorboard_log_dir": "tensorboard",
+  "tb_run_name": "fish_imitation_student_bc",
+  "checkpoint_dir": "checkpoints/imitation",
+  "checkpoint_every_epochs": 5
+}

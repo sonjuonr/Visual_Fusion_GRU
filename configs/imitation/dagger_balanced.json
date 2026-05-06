@@ -1,0 +1,58 @@
+{
+  "env": {
+    "instruction_text": "Find the red ball",
+    "semantic_backend_mode": "clip",
+    "fusion_alpha": 1.0,
+    "clip_required": true,
+    "clip_local_files_only": true,
+    "semantic_update_interval_steps": 1,
+    "action_repeat_steps": 6,
+    "renderer": "HydraStorm",
+    "headless": true
+  },
+  "bc": {
+    "model": {
+      "input_dim": 196,
+      "hidden_dims": [
+        256,
+        128
+      ],
+      "dropout": 0.0,
+      "activation": "relu"
+    },
+    "dataset_paths": [
+      "imitation_data/teacher_seed_balanced/teacher_seed_balanced_dataset.npz"
+    ],
+    "output_path": "models/student_bc_balanced.pt",
+    "resume_from": null,
+    "batch_size": 512,
+    "epochs": 15,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "val_ratio": 0.1,
+    "num_workers": 0,
+    "shuffle_seed": 42,
+    "class_weighting": "balanced",
+    "device": "cpu",
+    "tensorboard_log_dir": "tensorboard",
+    "tb_run_name": "fish_imitation_dagger_student_balanced",
+    "checkpoint_dir": "checkpoints/imitation_dagger_balanced",
+    "checkpoint_every_epochs": 5
+  },
+  "teacher_model_path": "models/fallback_teacher.zip",
+  "teacher_algorithm": "recurrent_ppo",
+  "seed_dataset_paths": [
+    "imitation_data/teacher_seed_balanced/teacher_seed_balanced_dataset.npz"
+  ],
+  "initial_student_checkpoint": "models/student_bc_balanced.pt",
+  "output_root": "imitation_runs/dagger_balanced",
+  "total_iterations": 5,
+  "rollout_episodes_per_iteration": 25,
+  "start_seed": 42,
+  "deterministic_teacher": true,
+  "deterministic_student": true,
+  "beta_start": 1.0,
+  "beta_end": 0.0,
+  "resume_student_from_previous": true,
+  "evaluate_episodes": 10
+}

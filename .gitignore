@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environments
+.venv/
+venv/
+env/
+.env
+
+# Isaac Sim / local runtime output
+tensorboard/
+checkpoints/
+*.usd
+*.usda
+*.usdc
+*.tmp
+
+# Large media should be linked from README or uploaded as Release assets.
+*.mp4
+*.mov
+*.avi
+
+# OS/editor noise
+.DS_Store
+.idea/
+.vscode/
+

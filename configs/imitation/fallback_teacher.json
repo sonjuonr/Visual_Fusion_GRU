@@ -1,0 +1,39 @@
+{
+  "env": {
+    "instruction_text": "Find the red ball",
+    "semantic_backend_mode": "fallback",
+    "fusion_alpha": 0.0,
+    "clip_required": false,
+    "clip_local_files_only": true,
+    "semantic_update_interval_steps": 1,
+    "action_repeat_steps": 6,
+    "renderer": "HydraStorm",
+    "headless": true
+  },
+  "ppo": {
+    "algorithm": "recurrent_ppo",
+    "learning_rate": 0.0003,
+    "n_steps": 2048,
+    "batch_size": 256,
+    "n_epochs": 10,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "clip_range": 0.2,
+    "ent_coef": 0.01,
+    "vf_coef": 0.5,
+    "max_grad_norm": 0.5,
+    "device": "cpu",
+    "verbose": 1,
+    "seed": 42
+  },
+  "total_timesteps": 400000,
+  "model_output_path": "models/fallback_teacher",
+  "monitor_log_path": "monitor_logs/fallback_teacher.monitor.csv",
+  "tensorboard_log_dir": "tensorboard",
+  "tb_run_name": "fish_imitation_fallback_teacher",
+  "checkpoint_dir": "checkpoints",
+  "checkpoint_freq_steps": 50000,
+  "console_log_freq_steps": 1000,
+  "progress_bar": true,
+  "resume_from": null
+}

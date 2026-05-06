@@ -1,0 +1,9 @@
+gymnasium
+numpy
+opencv-python
+sb3-contrib
+stable-baselines3
+tensorboard
+torch
+transformers
+

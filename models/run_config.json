@@ -1,0 +1,121 @@
+{
+  "instruction_text": "Find the red ball",
+  "total_timesteps": 170000,
+  "sim_config": {
+    "headless": true,
+    "renderer": "RayTracedLighting",
+    "stage_units_in_meters": 1.0,
+    "physics_dt": 0.016666666666666666,
+    "rendering_dt": 0.016666666666666666,
+    "warmup_steps": 5,
+    "sensor_warmup_steps": 3
+  },
+  "env_config": {
+    "camera_resolution": [
+      224,
+      224
+    ],
+    "semantic_update_interval_steps": 1,
+    "action_repeat_steps": 6,
+    "forward_speed_mps": 0.8,
+    "turn_rate_radps": 1.2,
+    "fish_initial_position": [
+      0.0,
+      0.0,
+      2.5
+    ],
+    "fish_initial_orientation_wxyz": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "ball_default_position": [
+      2.0,
+      0.0,
+      2.5
+    ],
+    "auto_create_ball_if_missing": true,
+    "ball_visual_radius_m": 0.08,
+    "ball_visual_color_rgb": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "randomize_ball_xy": true,
+    "ball_xy_min": [
+      -2.3,
+      -2.3
+    ],
+    "ball_xy_max": [
+      2.3,
+      2.3
+    ],
+    "curriculum_front_spawn_only": true,
+    "front_spawn_probability": 0.7,
+    "front_spawn_x_min": 0.8,
+    "front_spawn_x_max": 2.3,
+    "front_spawn_y_abs_max": 1.2,
+    "max_episode_steps": 600,
+    "wall_x_min": -2.5,
+    "wall_x_max": 2.5,
+    "wall_y_min": -2.5,
+    "wall_y_max": 2.5,
+    "wall_collision_margin_m": 0.08,
+    "wall_collision_penalty": -10.0,
+    "terminate_on_wall_collision": true,
+    "randomize_lighting": true,
+    "light_intensity_min": 1000.0,
+    "light_intensity_max": 6000.0,
+    "light_color_jitter": 0.25,
+    "success_distance_m": 0.45,
+    "distance_reward_scale": 4.5,
+    "heading_reward_scale": 0.15,
+    "turn_alignment_reward": 0.06,
+    "turn_misalignment_penalty": -0.03,
+    "forward_centered_reward": 0.02,
+    "search_visibility_peak_threshold": 0.008,
+    "search_turn_reward": 0.03,
+    "search_forward_penalty": -0.02,
+    "attention_turn_threshold": 0.03,
+    "success_reward": 50.0,
+    "timeout_penalty": -5.0
+  },
+  "vla_config": {
+    "instruction_text": "Find the red ball",
+    "semantic_backend_mode": "fallback",
+    "clip_model_name": "openai/clip-vit-base-patch16",
+    "clip_device": "cuda",
+    "clip_local_files_only": true,
+    "clip_required": true,
+    "heatmap_height": 14,
+    "heatmap_width": 14
+  },
+  "training_config": {
+    "algorithm": "recurrent_ppo",
+    "policy": "MlpPolicy",
+    "recurrent_policy": "MlpLstmPolicy",
+    "learning_rate": 0.0003,
+    "total_timesteps": 1000000,
+    "device": "cpu",
+    "verbose": 1,
+    "seed": 42,
+    "progress_bar": true,
+    "console_log_freq_steps": 1000,
+    "n_steps": 2048,
+    "batch_size": 256,
+    "n_epochs": 10,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "clip_range": 0.2,
+    "ent_coef": 0.01,
+    "vf_coef": 0.5,
+    "max_grad_norm": 0.5,
+    "tensorboard_log_dir": "tensorboard",
+    "tb_run_name": "fish_vla",
+    "monitor_log_path": "monitor_logs/monitor.csv",
+    "checkpoint_dir": "checkpoints",
+    "checkpoint_freq_steps": 50000,
+    "model_output_path": "models/my_underwater_robot_policy"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "env": {
+    "instruction_text": "Find the red ball",
+    "semantic_backend_mode": "fallback",
+    "fusion_alpha": 0.0,
+    "clip_required": true,
+    "clip_local_files_only": true,
+    "semantic_update_interval_steps": 1,
+    "action_repeat_steps": 6,
+    "renderer": "HydraStorm",
+    "headless": true
+  },
+  "teacher_model_path": "models/fallback_teacher.zip",
+  "teacher_algorithm": "recurrent_ppo",
+  "output_path": "imitation_data/teacher_seed_balanced/teacher_seed_balanced_dataset.npz",
+  "episodes": 0,
+  "start_seed": 42,
+  "seed_stride": 101,
+  "deterministic_teacher": true,
+  "teacher_view_name": "fallback",
+  "student_view_name": "clip",
+  "scenario_plan": "balanced",
+  "in_view_runs": 240,
+  "out_of_view_runs": 120
+}
