@@ -1,0 +1,110 @@
+[
+  {
+    "policy_path": "imitation_runs/dagger_balanced/checkpoints/student_iter_04.pt",
+    "summary_path": "imitation_data/eval/dagger_balanced_100eps/student_iter_04_eval_100eps.json",
+    "success_rate": 0.66,
+    "mean_reward": 34.68157363877336,
+    "mean_steps": 46.13,
+    "episodes": 100,
+    "action_histogram": {
+      "0": 2257,
+      "1": 1075,
+      "2": 1281
+    },
+    "forward_ratio": 0.4892694558855409,
+    "left_ratio": 0.23303706915239542,
+    "right_ratio": 0.27769347496206376,
+    "timeouts": 2,
+    "terminated_failures": 32
+  },
+  {
+    "policy_path": "imitation_runs/dagger_balanced/checkpoints/student_iter_03.pt",
+    "summary_path": "imitation_data/eval/dagger_balanced_100eps/student_iter_03_eval_100eps.json",
+    "success_rate": 0.64,
+    "mean_reward": 51.30110593216695,
+    "mean_steps": 213.18,
+    "episodes": 100,
+    "action_histogram": {
+      "0": 1551,
+      "1": 9824,
+      "2": 9943
+    },
+    "forward_ratio": 0.07275541795665634,
+    "left_ratio": 0.46083122244112956,
+    "right_ratio": 0.4664133596022141,
+    "timeouts": 25,
+    "terminated_failures": 11
+  },
+  {
+    "policy_path": "imitation_runs/dagger_balanced/checkpoints/student_iter_05.pt",
+    "summary_path": "imitation_data/eval/dagger_balanced_100eps/student_iter_05_eval_100eps.json",
+    "success_rate": 0.59,
+    "mean_reward": 36.680078623320576,
+    "mean_steps": 106.15,
+    "episodes": 100,
+    "action_histogram": {
+      "0": 2139,
+      "1": 4101,
+      "2": 4375
+    },
+    "forward_ratio": 0.20150730098916628,
+    "left_ratio": 0.38634008478568066,
+    "right_ratio": 0.4121526142251531,
+    "timeouts": 10,
+    "terminated_failures": 31
+  },
+  {
+    "policy_path": "imitation_runs/dagger_balanced/checkpoints/student_iter_02.pt",
+    "summary_path": "imitation_data/eval/dagger_balanced_100eps/student_iter_02_eval_100eps.json",
+    "success_rate": 0.49,
+    "mean_reward": 47.186772214665574,
+    "mean_steps": 213.01,
+    "episodes": 100,
+    "action_histogram": {
+      "0": 1703,
+      "1": 9672,
+      "2": 9926
+    },
+    "forward_ratio": 0.0799492981550162,
+    "left_ratio": 0.4540631895216187,
+    "right_ratio": 0.4659875123233651,
+    "timeouts": 28,
+    "terminated_failures": 23
+  },
+  {
+    "policy_path": "imitation_runs/dagger_balanced/checkpoints/student_iter_01.pt",
+    "summary_path": "imitation_data/eval/dagger_balanced_100eps/student_iter_01_eval_100eps.json",
+    "success_rate": 0.41,
+    "mean_reward": 19.816414084546082,
+    "mean_steps": 76.6,
+    "episodes": 100,
+    "action_histogram": {
+      "0": 2757,
+      "1": 2173,
+      "2": 2730
+    },
+    "forward_ratio": 0.35992167101827677,
+    "left_ratio": 0.28368146214099216,
+    "right_ratio": 0.3563968668407311,
+    "timeouts": 2,
+    "terminated_failures": 57
+  },
+  {
+    "policy_path": "models/student_bc_balanced.pt",
+    "summary_path": "imitation_data/eval/dagger_balanced_100eps/student_bc_balanced_eval_100eps.json",
+    "success_rate": 0.09,
+    "mean_reward": 22.97408004041133,
+    "mean_steps": 475.85,
+    "episodes": 100,
+    "action_histogram": {
+      "0": 654,
+      "1": 23696,
+      "2": 23235
+    },
+    "forward_ratio": 0.013743826836187875,
+    "left_ratio": 0.4979720500157613,
+    "right_ratio": 0.48828412314805086,
+    "timeouts": 77,
+    "terminated_failures": 14
+  }
+]

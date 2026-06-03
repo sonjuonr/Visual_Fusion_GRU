@@ -11,6 +11,7 @@
     "headless": true
   },
   "bc": {
+    "model_type": "mlp",
     "model": {
       "input_dim": 196,
       "hidden_dims": [
@@ -46,13 +47,19 @@
   ],
   "initial_student_checkpoint": "models/student_bc_balanced.pt",
   "output_root": "imitation_runs/dagger_balanced",
-  "total_iterations": 5,
-  "rollout_episodes_per_iteration": 25,
+  "total_iterations": 8,
+  "rollout_episodes_per_iteration": 40,
   "start_seed": 42,
   "deterministic_teacher": true,
   "deterministic_student": true,
-  "beta_start": 1.0,
-  "beta_end": 0.0,
+  "beta_start": 0.8,
+  "beta_end": 0.2,
   "resume_student_from_previous": true,
-  "evaluate_episodes": 10
+  "evaluate_episodes": 25,
+  "scenario_plan": "balanced",
+  "in_view_runs_per_iteration": 20,
+  "out_of_view_runs_per_iteration": 20,
+  "scenario_names": [],
+  "runs_per_scenario": 1,
+  "seed_stride": 101
 }

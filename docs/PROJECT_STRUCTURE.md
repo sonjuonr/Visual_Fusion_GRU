@@ -6,12 +6,13 @@ Visual_Fusion_GRU_github/
   requirements.txt
   src/                         Core environment, VLA, RL, and IL code
   src/imitation/               BC, DAgger, dataset, policy, evaluation modules
-  configs/imitation/           Teacher, BC, DAgger, and evaluation configs
+  configs/imitation/           Teacher, BC, DAgger, GRU, and evaluation configs
   scripts/                     Historical and current launch scripts
   models/                      Compact trained model outputs and run configs
+                                current best: student_gru_hard_cases_radius1_seed601000.pt
   monitor_logs/                RL and teacher monitor CSV records
   imitation_data/              Seed teacher datasets and evaluation summaries
-  imitation_runs/              DAgger datasets, checkpoints, summaries
+  imitation_runs/              DAgger datasets, checkpoints, hard-case summaries
   artifacts_manifest/          Included file list and excluded checkpoint list
   docs/                        Upload and structure notes
 ```
@@ -19,4 +20,3 @@ Visual_Fusion_GRU_github/
 The full Isaac Sim installation is not part of this folder. Keep this package
 as the public project repo, and keep the Isaac Sim workspace as the local
 runtime environment.
-

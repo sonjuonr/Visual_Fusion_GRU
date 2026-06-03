@@ -1,0 +1,171 @@
+{
+  "eval_summary": "imitation_data/eval/dagger_gru_balanced_200eps/student_iter_08_eval_200eps.json",
+  "policy_path": "imitation_runs/dagger_gru_balanced/checkpoints/student_iter_08.pt",
+  "episodes": 200,
+  "success_rate": 0.92,
+  "failed_count": 16,
+  "failed_seeds": [
+    500040,
+    500060,
+    500061,
+    500066,
+    500067,
+    500069,
+    500072,
+    500073,
+    500094,
+    500101,
+    500115,
+    500116,
+    500138,
+    500139,
+    500152,
+    500175
+  ],
+  "failed_episodes": [
+    {
+      "episode_index": 40,
+      "seed": 500040,
+      "steps": 37,
+      "reward": 1.394551999306083,
+      "final_distance_xy_m": 0.6355956027724955,
+      "terminated": true,
+      "truncated": false
+    },
+    {
+      "episode_index": 60,
+      "seed": 500060,
+      "steps": 53,
+      "reward": -1.3458507145750662,
+      "final_distance_xy_m": 0.9259096226500286,
+      "terminated": true,
+      "truncated": false
+    },
+    {
+      "episode_index": 61,
+      "seed": 500061,
+      "steps": 35,
+      "reward": -4.018880853657054,
+      "final_distance_xy_m": 0.9455765357948992,
+      "terminated": true,
+      "truncated": false
+    },
+    {
+      "episode_index": 66,
+      "seed": 500066,
+      "steps": 31,
+      "reward": -0.6167315589465545,
+      "final_distance_xy_m": 0.7483489435184757,
+      "terminated": true,
+      "truncated": false
+    },
+    {
+      "episode_index": 67,
+      "seed": 500067,
+      "steps": 41,
+      "reward": -1.2872887887313578,
+      "final_distance_xy_m": 1.0784622865384303,
+      "terminated": true,
+      "truncated": false
+    },
+    {
+      "episode_index": 69,
+      "seed": 500069,
+      "steps": 31,
+      "reward": -3.8990105566636,
+      "final_distance_xy_m": 0.9881092498025619,
+      "terminated": true,
+      "truncated": false
+    },
+    {
+      "episode_index": 72,
+      "seed": 500072,
+      "steps": 81,
+      "reward": -21.429001299631885,
+      "final_distance_xy_m": 3.5112001001348454,
+      "terminated": true,
+      "truncated": false
+    },
+    {
+      "episode_index": 73,
+      "seed": 500073,
+      "steps": 77,
+      "reward": -22.50078685262971,
+      "final_distance_xy_m": 3.2867601044037915,
+      "terminated": true,
+      "truncated": false
+    },
+    {
+      "episode_index": 94,
+      "seed": 500094,
+      "steps": 40,
+      "reward": -1.8126035661315179,
+      "final_distance_xy_m": 1.1473201144538043,
+      "terminated": true,
+      "truncated": false
+    },
+    {
+      "episode_index": 101,
+      "seed": 500101,
+      "steps": 42,
+      "reward": -3.7557272387722165,
+      "final_distance_xy_m": 1.1090806899681793,
+      "terminated": true,
+      "truncated": false
+    },
+    {
+      "episode_index": 115,
+      "seed": 500115,
+      "steps": 75,
+      "reward": -23.847471507974003,
+      "final_distance_xy_m": 3.6359256963226882,
+      "terminated": true,
+      "truncated": false
+    },
+    {
+      "episode_index": 116,
+      "seed": 500116,
+      "steps": 40,
+      "reward": -0.9199008966909847,
+      "final_distance_xy_m": 0.9282805108422332,
+      "terminated": true,
+      "truncated": false
+    },
+    {
+      "episode_index": 138,
+      "seed": 500138,
+      "steps": 31,
+      "reward": -12.032979042185572,
+      "final_distance_xy_m": 1.6651406820836143,
+      "terminated": true,
+      "truncated": false
+    },
+    {
+      "episode_index": 139,
+      "seed": 500139,
+      "steps": 33,
+      "reward": -2.537104595386319,
+      "final_distance_xy_m": 1.0163852057362328,
+      "terminated": true,
+      "truncated": false
+    },
+    {
+      "episode_index": 152,
+      "seed": 500152,
+      "steps": 41,
+      "reward": -5.265080656697166,
+      "final_distance_xy_m": 1.1873523798412722,
+      "terminated": true,
+      "truncated": false
+    },
+    {
+      "episode_index": 175,
+      "seed": 500175,
+      "steps": 41,
+      "reward": -3.342225663898806,
+      "final_distance_xy_m": 1.1779291852610245,
+      "terminated": true,
+      "truncated": false
+    }
+  ]
+}

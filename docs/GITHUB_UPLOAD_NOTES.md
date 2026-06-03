@@ -6,14 +6,28 @@ It is intentionally curated from the full Isaac Sim workspace.
 Included:
 
 - Project README and current research story.
+- Simulation screenshot for GitHub preview:
+  ![Current GRU student simulation screenshot](assets/current_student_simulation.png)
 - Source code under `src/`.
 - Training, evaluation, and launch scripts under `scripts/`.
 - Imitation configs under `configs/imitation/`.
-- Compact trained artifacts under `models/`.
+- Compact trained artifacts under `models/`, including the current best GRU
+  student:
+  `models/student_gru_hard_cases_radius1_seed601000.pt`.
 - Imitation datasets and DAgger run outputs under `imitation_data/` and
   `imitation_runs/`.
 - Monitor logs and run summaries needed to support the RL choke-point finding.
 - File manifests under `artifacts_manifest/`.
+
+Current headline result:
+
+- `0.957` success rate over `1000` pure-CLIP evaluation episodes.
+- Eval summary:
+  `imitation_data/eval/dagger_gru_hard_cases_radius1_seed601000_1000eps/student_hard_seed_eval_1000eps.json`
+- Training summary:
+  `imitation_runs/dagger_gru_hard_cases_radius1_seed601000/summaries/hard_seed_dataset_train_summary.json`
+- Public model copy:
+  `models/student_gru_hard_cases_radius1_seed601000.pt`
 
 Not included:
 
@@ -44,7 +58,13 @@ Release helper scripts:
 
 ```bash
 ./scripts/run_dagger_release.sh
+./scripts/run_dagger_gru_release.sh
 ./scripts/eval_student_release.sh
+./scripts/eval_dagger_students_100eps.sh
+./scripts/eval_dagger_students_200eps.sh
+./scripts/eval_dagger_gru_students_200eps.sh
+./scripts/eval_iter08_1000eps_and_extract_hard_cases.sh
+./scripts/run_gru_hard_seed_dagger.sh
 ```
 
 Runtime note:

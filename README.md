@@ -1,8 +1,9 @@
 # Visual-Fusion-GRU: SLA-Aware Underwater VLA Navigation
 
-> Status: The original RL-to-semantic migration plan has been tested and found
-> to have a choke point. The project is now moving to imitation learning while
-> preserving the same final VLA goal.
+> Status: The original RL-to-semantic migration plan found a repeatable
+> choke point near pure semantic control. The current best GRU imitation
+> student reaches `0.957` success rate over `1000` CLIP-view evaluation
+> episodes after hard-case DAgger fine-tuning.
 
 Visual-Fusion-GRU is a navigation framework for an autonomous robotic fish in
 challenging underwater environments, such as turbidity, unstable lighting, and
@@ -28,9 +29,11 @@ heatmaps.
 After testing, that plan is no longer the active path. The records show a
 repeatable RL choke point near pure semantic control. The fallback policy can
 track the target, and hybrid RL can move close to CLIP, but it does not survive
-the last part of the migration. The current direction is imitation learning:
-use the working fallback policy as a teacher, collect teacher-labeled examples,
-and train a CLIP-observation student with BC + DAgger.
+the last part of the migration. The project therefore moved to imitation
+learning: use the working fallback policy as a teacher, collect teacher-labeled
+examples, and train a CLIP-observation student with BC + DAgger. The latest
+GRU student closes most of that gap, reaching `95.7%` success in a `1000`
+episode pure-CLIP evaluation.
 
 ## Simulation Demos
 
@@ -43,6 +46,38 @@ These videos show that the fallback observation can drive basic turning and
 tracking when the target is visible. They should now be read as evidence that
 the teacher behavior exists, not as evidence that pure semantic VLA navigation
 has already been solved.
+
+## Current Outcome
+
+The strongest released student is:
+
+```text
+models/student_gru_hard_cases_radius1_seed601000.pt
+```
+
+This file is a GitHub-friendly copy of:
+
+```text
+imitation_runs/dagger_gru_hard_cases_radius1_seed601000/checkpoints/student_hard_seed.pt
+```
+
+Evaluation summary:
+
+| Policy | Evaluation | Success rate | Mean steps | Notes |
+| :--- | :--- | ---: | ---: | :--- |
+| BC-only MLP baseline | 20 episodes | 0.150 | 496.2 | Early transfer baseline; heavy left/right oscillation. |
+| MLP DAgger `student_iter_04.pt` | 100 episodes | 0.660 | 46.1 | First sign that DAgger corrected off-policy states. |
+| GRU DAgger `student_iter_08.pt` | 1000 episodes | 0.883 | 31.3 | Memory reduced target-loss shaking but still left 119 hard cases. |
+| GRU hard-case student | 1000 episodes | 0.957 | 31.3 | Current best result after failed-seed/radius-1 hard-case fine-tuning. |
+
+The current best result is supported by:
+
+- Eval summary:
+  `imitation_data/eval/dagger_gru_hard_cases_radius1_seed601000_1000eps/student_hard_seed_eval_1000eps.json`
+- Hard-case report:
+  `imitation_data/eval/dagger_gru_hard_cases_radius1_seed601000_1000eps/student_hard_seed_hard_cases.json`
+- Training summary:
+  `imitation_runs/dagger_gru_hard_cases_radius1_seed601000/summaries/hard_seed_dataset_train_summary.json`
 
 ## Original Plan
 
@@ -88,6 +123,12 @@ where it failed: extremely close to pure CLIP. Even tiny reductions in fallback
 support caused a large drop in success. That means the final `0.5%` to `1%` of
 fallback information was carrying a disproportionate amount of control-critical
 signal.
+
+At `alpha=0.993`, the fallback contribution is only `1 - alpha = 0.007`
+(`0.7%` of the fused heatmap). The success collapse at this point suggests
+that this tiny fallback slice still made high-value left/center/right decisions
+in the underwater tracking task. In other words, the remaining fallback signal
+was small in percentage but large in decision quality.
 
 ## My Guess About Why RL Gets Stuck
 
@@ -157,22 +198,42 @@ graph TD
 Current IL assets:
 
 - DAgger orchestration: `src/imitation/dagger.py`
-- Balanced DAgger config: `configs/imitation/dagger_balanced.json`
-- DAgger run copy: `imitation_runs/dagger_balanced/dagger_config.json`
+- GRU student model code: `src/imitation/models.py`
+- Balanced GRU DAgger config: `configs/imitation/dagger_gru_balanced.json`
+- GRU student config: `configs/imitation/student_gru_balanced.json`
+- DAgger run copy: `imitation_runs/dagger_gru_balanced/dagger_config.json`
 - Teacher seed dataset summary:
   `imitation_data/teacher_seed_balanced/teacher_seed_balanced_dataset.summary.json`
-- Student evaluation summary:
-  `imitation_data/eval/eval_student_balanced_summary.json`
+- Current best model note: `models/CURRENT_BEST_STUDENT.md`
+- Current best eval config: `configs/imitation/eval_current_best_student.json`
 
 The balanced seed dataset contains `360` teacher episodes and `11720` labeled
-records. The current CLIP-view BC student is still early: the recorded
-balanced evaluation shows `0.15` success rate over `20` episodes, with a strong
+records. The first CLIP-view BC student was weak: the recorded balanced
+evaluation showed `0.15` success rate over `20` episodes, with a strong
 left/right oscillation signature in the action histogram.
 
-This weak BC result is not the end of the IL path. It is exactly why DAgger is
-needed. BC only learns from teacher states. DAgger collects states visited by
-the student, asks the teacher what should have been done there, and then
-re-trains on those corrected off-trajectory examples.
+That weak BC result is why DAgger became central. BC only learns from teacher
+states. DAgger collects states visited by the student, asks the teacher what
+should have been done there, and then re-trains on those corrected
+off-trajectory examples.
+
+The successful imitation path was:
+
+1. Start from the `360` episode balanced teacher seed dataset.
+2. Run `8` balanced GRU DAgger iterations with `40` rollout episodes per
+   iteration, alternating in-view tracking and out-of-view recovery cases.
+3. Evaluate `student_iter_08.pt` on `1000` pure-CLIP episodes. It reached
+   `0.883` success rate and exposed `119` hard-case seeds.
+4. Collect failed-seed teacher labels and fine-tune the GRU student from those
+   hard cases. This raised the hard-case student to `0.942` to `0.946` success
+   in `1000` episode sweeps.
+5. Expand the next hard-case set with seed radius `1`, producing `299`
+   targeted hard-case episodes and `35573` new labeled records.
+6. Fine-tune for `2` additional epochs at learning rate `5e-5`, producing the
+   current best `0.957` success rate over `1000` episodes.
+
+The final fine-tune used `73737` total labeled records from the balanced seed
+dataset, the `8` balanced DAgger shards, and the radius-1 hard-case shard.
 
 ## Updated Training Timeline
 
@@ -181,34 +242,41 @@ re-trains on those corrected off-trajectory examples.
 | Initial | Pure CLIP semantic RL | CLIP ViT-B/16 heatmap | Failed. Semantic heatmaps alone were not stable enough for RL exploration. |
 | Phase A | Fallback-guided RL | Color saliency heatmap | Worked for visible-target tracking, but target-loss search remained unstable. |
 | Phase B | Hybrid alpha-fusion RL | `alpha * CLIP + (1 - alpha) * fallback` | Tested and found a choke point near `alpha=0.9935`; did not reach `alpha=1.0`. |
-| Phase C | Imitation transfer | Fallback teacher labels, CLIP student obs | Active. BC seed exists; DAgger is the current stability plan. |
-| Phase D | Semantic VLA navigation | Pure CLIP/VLM heatmap | Still the final goal, but now approached through IL instead of direct RL annealing. |
+| Phase C | BC imitation transfer | Fallback teacher labels, CLIP student obs | Baseline completed; BC alone was unstable (`0.15` over `20` episodes). |
+| Phase D | Balanced GRU DAgger | CLIP heatmap sequence with GRU memory | Completed; `0.883` over `1000` episodes before hard-case mining. |
+| Phase E | Hard-case GRU fine-tuning | Failed-seed/radius-1 teacher labels | Current best; `0.957` over `1000` pure-CLIP episodes. |
 
 ## Current Situation
 
-The project is now in a transition state:
+The project now has a strong pure-CLIP imitation baseline:
 
-- The fallback teacher is useful and should be preserved.
-- The RL alpha curriculum produced a meaningful negative result.
-- The pure CLIP student is not strong yet.
-- The main failure mode is still search stability during target loss.
-- The next milestone is not "reach alpha 1 with PPO"; it is "make the CLIP
-  student recover from its own mistakes through DAgger".
+- The fallback teacher remains useful and should be preserved.
+- The RL alpha curriculum produced a meaningful negative result that shaped
+  the final training plan.
+- The GRU student uses pure CLIP observations at evaluation time.
+- The current best model reaches `957 / 1000` successes on the latest sweep.
+- The residual report contains `43` outright failures and `5` slow successes,
+  so remaining work should focus on hard-case recovery rather than broad
+  behavior learning.
 
 ## Current Plan
 
-1. Run the balanced DAgger loop from `configs/imitation/dagger_balanced.json`.
-2. Inspect per-iteration summaries under `imitation_runs/dagger_balanced`.
-3. Watch the action histogram. The student should use more forward actions and
-   less left/right shaking as DAgger improves.
-4. Add target-loss/search-specific scenarios to DAgger collection.
-5. Evaluate each student checkpoint on pure CLIP observations.
-6. Only after the student becomes stable, reconsider whether hybrid fusion or
-   GRU memory should be reintroduced for robustness.
+1. Preserve `models/student_gru_hard_cases_radius1_seed601000.pt` as the
+   current public checkpoint.
+2. Re-evaluate the current best model on wider seed ranges, not only the
+   `601000` seed family.
+3. Mine the remaining `48` hard cases from the latest report and collect
+   another small teacher-labeled shard.
+4. Keep hard-case fine-tuning conservative: short runs, low learning rate, and
+   validation against the broad balanced benchmark to avoid overfitting.
+5. Treat the RL alpha-fusion result as evidence, not a dead end: fallback
+   remains a teacher and diagnostic signal, but the deployed student should use
+   pure CLIP observations.
 
 The story is therefore not "RL failed, start over." It is:
 
 > RL proved that fallback tracking is learnable, and it also revealed that
-> alpha annealing has a semantic-control choke point. The next step is to use
-> the fallback policy as a teacher and transfer its behavior into the CLIP
-> observation space with imitation learning.
+> alpha annealing has a semantic-control choke point. Imitation learning then
+> used the fallback policy as a teacher, added GRU memory for target-loss
+> recovery, and used hard-case DAgger to bring the pure-CLIP student to about
+> `95%` success.

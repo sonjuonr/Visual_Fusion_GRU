@@ -1,4 +1,5 @@
 {
+  "model_type": "mlp",
   "model": {
     "input_dim": 196,
     "hidden_dims": [

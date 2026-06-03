@@ -1,0 +1,66 @@
+{
+  "policy_type": "torch_student",
+  "policy_path": "imitation_runs/dagger_gru_hard_cases_radius1_seed601000/checkpoints/student_hard_seed.pt",
+  "observation_view_name": "clip",
+  "episodes": 5,
+  "success_rate": 0.8,
+  "mean_reward": 49.294290847909345,
+  "mean_steps": 36.8,
+  "action_histogram": {
+    "0": 126,
+    "1": 26,
+    "2": 32
+  },
+  "episode_summaries": [
+    {
+      "episode_index": 0,
+      "seed": 601000,
+      "steps": 37,
+      "reward": 64.31226307775736,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 0.440772403050002
+    },
+    {
+      "episode_index": 1,
+      "seed": 601001,
+      "steps": 44,
+      "reward": 67.32781879953862,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 0.4333259519206216
+    },
+    {
+      "episode_index": 2,
+      "seed": 601002,
+      "steps": 28,
+      "reward": 56.90900155138927,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 0.3988220011415874
+    },
+    {
+      "episode_index": 3,
+      "seed": 601003,
+      "steps": 19,
+      "reward": 59.24390127760768,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 0.3915720104174827
+    },
+    {
+      "episode_index": 4,
+      "seed": 601004,
+      "steps": 56,
+      "reward": -1.321530466746232,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 1.3649058855461227
+    }
+  ]
+}

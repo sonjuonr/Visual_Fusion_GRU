@@ -5,6 +5,6 @@ repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$repo_root"
 
 export PYTHONPATH="$repo_root/src${PYTHONPATH:+:$PYTHONPATH}"
+source "$repo_root/scripts/_python_env.sh"
 
-python src/run_dagger.py --config configs/imitation/dagger_balanced.json
-
+"${PYTHON_RUNNER[@]}" src/run_dagger.py --config configs/imitation/dagger_balanced.json

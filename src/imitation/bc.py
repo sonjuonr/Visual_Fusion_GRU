@@ -14,8 +14,14 @@ from torch.utils.tensorboard import SummaryWriter
 
 from imitation.config import StudentBCConfig
 from imitation.constants import NUM_ACTIONS
-from imitation.dataset import HeatmapActionDataset, action_histogram, load_rollout_arrays
-from imitation.models import HeatmapActionMLP
+from imitation.dataset import (
+    HeatmapActionDataset,
+    HeatmapActionSequenceDataset,
+    action_histogram,
+    build_episode_keys,
+    load_rollout_arrays,
+)
+from imitation.models import build_heatmap_action_model
 
 
 def _build_class_weights(actions: np.ndarray, strategy: str, num_classes: int) -> torch.Tensor | None:
@@ -58,7 +64,7 @@ def _make_run_name(base_name: str, suffix: str | None) -> str:
 
 def save_student_checkpoint(
     path: str | Path,
-    model: HeatmapActionMLP,
+    model: nn.Module,
     config: StudentBCConfig,
     metrics: dict[str, float],
     class_hist: dict[int, int],
@@ -67,6 +73,7 @@ def save_student_checkpoint(
     output_path.parent.mkdir(parents=True, exist_ok=True)
     checkpoint = {
         "model_state_dict": model.state_dict(),
+        "model_type": str(config.model_type),
         "model_config": asdict(config.model),
         "training_config": asdict(config),
         "metrics": metrics,
@@ -97,8 +104,31 @@ def train_behavior_cloning(
     class_hist = action_histogram(actions)
     class_weights = _build_class_weights(actions, config.class_weighting, NUM_ACTIONS)
 
+    model_type = str(config.model_type).strip().lower()
+    is_recurrent = model_type == "gru"
+
     train_idx, val_idx = _split_indices(len(actions), config.val_ratio, config.shuffle_seed)
-    full_dataset = HeatmapActionDataset(observations, actions)
+    if is_recurrent:
+        if "step_index" not in arrays:
+            raise KeyError("GRU student training requires step_index in rollout datasets.")
+        episode_keys = build_episode_keys(arrays)
+        full_dataset = HeatmapActionSequenceDataset(
+            observations,
+            actions,
+            episode_keys=episode_keys,
+            step_indices=np.asarray(arrays["step_index"], dtype=np.int64),
+            sequence_length=int(config.sequence_length),
+            stride=int(config.sequence_stride),
+        )
+        sequence_indices = np.arange(len(full_dataset), dtype=np.int64)
+        rng = np.random.default_rng(config.shuffle_seed)
+        rng.shuffle(sequence_indices)
+        raw_val_count = int(round(float(len(sequence_indices)) * float(config.val_ratio)))
+        val_count = min(max(raw_val_count, 1), max(0, len(sequence_indices) - 1)) if len(sequence_indices) > 1 else 0
+        train_idx = sequence_indices[val_count:]
+        val_idx = sequence_indices[:val_count]
+    else:
+        full_dataset = HeatmapActionDataset(observations, actions)
     train_dataset = Subset(full_dataset, train_idx.tolist())
     val_dataset = Subset(full_dataset, val_idx.tolist())
 
@@ -118,7 +148,7 @@ def train_behavior_cloning(
         )
 
     device = torch.device(config.device)
-    model = HeatmapActionMLP(**asdict(config.model)).to(device)
+    model = build_heatmap_action_model(model_type, asdict(config.model)).to(device)
     if resume_from:
         checkpoint = torch.load(Path(resume_from), map_location=device)
         model.load_state_dict(checkpoint["model_state_dict"])
@@ -162,14 +192,21 @@ def train_behavior_cloning(
                 batch_obs = batch_obs.to(device)
                 batch_actions = batch_actions.to(device)
                 optimizer.zero_grad(set_to_none=True)
-                logits = model(batch_obs)
-                loss = criterion(logits, batch_actions)
+                if is_recurrent:
+                    logits, _ = model(batch_obs)
+                    loss = criterion(logits.reshape(-1, NUM_ACTIONS), batch_actions.reshape(-1))
+                    train_acc_batch = _accuracy(logits.reshape(-1, NUM_ACTIONS).detach(), batch_actions.reshape(-1))
+                    batch_size = int(batch_actions.numel())
+                else:
+                    logits = model(batch_obs)
+                    loss = criterion(logits, batch_actions)
+                    train_acc_batch = _accuracy(logits.detach(), batch_actions)
+                    batch_size = int(batch_actions.shape[0])
                 loss.backward()
                 optimizer.step()
 
-                batch_size = int(batch_actions.shape[0])
                 train_loss_sum += float(loss.item()) * batch_size
-                train_acc_sum += _accuracy(logits.detach(), batch_actions) * batch_size
+                train_acc_sum += train_acc_batch * batch_size
                 train_count += batch_size
 
             train_loss = train_loss_sum / max(1, train_count)
@@ -186,12 +223,19 @@ def train_behavior_cloning(
                     for batch_obs, batch_actions in val_loader:
                         batch_obs = batch_obs.to(device)
                         batch_actions = batch_actions.to(device)
-                        logits = model(batch_obs)
-                        loss = criterion(logits, batch_actions)
+                        if is_recurrent:
+                            logits, _ = model(batch_obs)
+                            loss = criterion(logits.reshape(-1, NUM_ACTIONS), batch_actions.reshape(-1))
+                            val_acc_batch = _accuracy(logits.reshape(-1, NUM_ACTIONS), batch_actions.reshape(-1))
+                            batch_size = int(batch_actions.numel())
+                        else:
+                            logits = model(batch_obs)
+                            loss = criterion(logits, batch_actions)
+                            val_acc_batch = _accuracy(logits, batch_actions)
+                            batch_size = int(batch_actions.shape[0])
 
-                        batch_size = int(batch_actions.shape[0])
                         val_loss_sum += float(loss.item()) * batch_size
-                        val_acc_sum += _accuracy(logits, batch_actions) * batch_size
+                        val_acc_sum += val_acc_batch * batch_size
                         val_count += batch_size
                 val_loss = val_loss_sum / max(1, val_count)
                 val_acc = val_acc_sum / max(1, val_count)

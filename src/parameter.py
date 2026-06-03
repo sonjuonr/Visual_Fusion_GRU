@@ -7,7 +7,10 @@ from typing import Tuple
 
 
 _REPO_ROOT = Path(__file__).resolve().parents[1]
-_DEFAULT_STAGE_PATH = _REPO_ROOT / "final_project" / "watertank.usd"
+_DEFAULT_STAGE_CANDIDATES = (
+    _REPO_ROOT / "final_project" / "watertank.usd",
+    _REPO_ROOT.parent / "final_project" / "watertank.usd",
+)
 
 
 def _env_flag(name: str, default: bool) -> bool:
@@ -18,7 +21,13 @@ def _env_flag(name: str, default: bool) -> bool:
 
 
 def _default_stage_path() -> str:
-    return os.getenv("FISH_TANK_USD_PATH", str(_DEFAULT_STAGE_PATH))
+    override = os.getenv("FISH_TANK_USD_PATH")
+    if override:
+        return override
+    for candidate in _DEFAULT_STAGE_CANDIDATES:
+        if candidate.is_file():
+            return str(candidate)
+    return str(_DEFAULT_STAGE_CANDIDATES[0])
 
 
 def _default_clip_model_name() -> str:

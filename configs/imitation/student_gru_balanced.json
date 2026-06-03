@@ -1,0 +1,33 @@
+{
+  "model_type": "gru",
+  "model": {
+    "input_dim": 196,
+    "hidden_dim": 128,
+    "num_layers": 1,
+    "dropout": 0.0,
+    "mlp_hidden_dims": [
+      128
+    ],
+    "activation": "relu"
+  },
+  "dataset_paths": [
+    "imitation_data/teacher_seed_balanced/teacher_seed_balanced_dataset.npz"
+  ],
+  "output_path": "models/student_gru_balanced.pt",
+  "resume_from": null,
+  "batch_size": 128,
+  "epochs": 20,
+  "learning_rate": 0.001,
+  "weight_decay": 0.0001,
+  "val_ratio": 0.1,
+  "num_workers": 0,
+  "shuffle_seed": 42,
+  "class_weighting": "balanced",
+  "device": "cpu",
+  "tensorboard_log_dir": "tensorboard",
+  "tb_run_name": "fish_imitation_student_gru_balanced",
+  "checkpoint_dir": "checkpoints/imitation_gru_balanced",
+  "checkpoint_every_epochs": 5,
+  "sequence_length": 16,
+  "sequence_stride": 4
+}

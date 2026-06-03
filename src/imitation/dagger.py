@@ -8,7 +8,7 @@ from pathlib import Path
 
 from imitation.bc import train_behavior_cloning
 from imitation.collector import collect_labeled_episodes
-from imitation.config import DaggerConfig, EvaluationConfig, save_json_config
+from imitation.config import CollectionConfig, DaggerConfig, EvaluationConfig, save_json_config
 from imitation.evaluation import _evaluate_policy_in_env
 from imitation.policies import SB3PolicyAdapter, TorchStudentPolicyAdapter
 from imitation.runtime import SimulationAppSession, build_underwater_env
@@ -70,8 +70,27 @@ def run_dagger(config: DaggerConfig) -> dict[str, object]:
 
             env = build_underwater_env(config.env)
             try:
+                collection_config = CollectionConfig(
+                    env=config.env,
+                    teacher_model_path=config.teacher_model_path,
+                    teacher_algorithm=config.teacher_algorithm,
+                    output_path=str(shard_path),
+                    episodes=int(config.rollout_episodes_per_iteration),
+                    start_seed=int(config.start_seed)
+                    + (iteration_index - 1) * int(config.rollout_episodes_per_iteration),
+                    seed_stride=int(config.seed_stride),
+                    deterministic_teacher=config.deterministic_teacher,
+                    teacher_view_name="fallback",
+                    student_view_name="clip",
+                    scenario_plan=str(config.scenario_plan),
+                    scenario_names=list(config.scenario_names),
+                    runs_per_scenario=int(config.runs_per_scenario),
+                    in_view_runs=int(config.in_view_runs_per_iteration),
+                    out_of_view_runs=int(config.out_of_view_runs_per_iteration),
+                )
                 collect_result = collect_labeled_episodes(
                     env,
+                    config=collection_config,
                     teacher_policy=teacher_policy,
                     student_policy=student_policy,
                     output_path=str(shard_path),

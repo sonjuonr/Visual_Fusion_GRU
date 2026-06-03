@@ -1,0 +1,266 @@
+{
+  "policy_type": "torch_student",
+  "policy_path": "imitation_runs/dagger_gru_balanced/checkpoints/student_iter_01.pt",
+  "observation_view_name": "clip",
+  "episodes": 25,
+  "success_rate": 0.2,
+  "mean_reward": -0.8606927285416174,
+  "mean_steps": 42.0,
+  "action_histogram": {
+    "0": 825,
+    "1": 50,
+    "2": 175
+  },
+  "episode_summaries": [
+    {
+      "episode_index": 0,
+      "seed": 143000,
+      "steps": 46,
+      "reward": -10.743458529192724,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 1.979100587830428
+    },
+    {
+      "episode_index": 1,
+      "seed": 143001,
+      "steps": 46,
+      "reward": -11.998453086818788,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 2.027195744944017
+    },
+    {
+      "episode_index": 2,
+      "seed": 143002,
+      "steps": 46,
+      "reward": -7.590989417685916,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 1.4681642970526863
+    },
+    {
+      "episode_index": 3,
+      "seed": 143003,
+      "steps": 46,
+      "reward": -21.070451945074463,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 3.8135314126603
+    },
+    {
+      "episode_index": 4,
+      "seed": 143004,
+      "steps": 46,
+      "reward": -18.110471827812283,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 2.7418272122203713
+    },
+    {
+      "episode_index": 5,
+      "seed": 143005,
+      "steps": 46,
+      "reward": -26.198012947435707,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 3.2938744779143803
+    },
+    {
+      "episode_index": 6,
+      "seed": 143006,
+      "steps": 43,
+      "reward": 66.46670166045497,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 0.4337341626970737
+    },
+    {
+      "episode_index": 7,
+      "seed": 143007,
+      "steps": 17,
+      "reward": 54.985308705984174,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 0.415750575373177
+    },
+    {
+      "episode_index": 8,
+      "seed": 143008,
+      "steps": 46,
+      "reward": -12.505389395282666,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 2.35223338184795
+    },
+    {
+      "episode_index": 9,
+      "seed": 143009,
+      "steps": 46,
+      "reward": -14.244892098233585,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 2.4930449266984414
+    },
+    {
+      "episode_index": 10,
+      "seed": 143010,
+      "steps": 46,
+      "reward": -10.103520842145377,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 2.3748791233205124
+    },
+    {
+      "episode_index": 11,
+      "seed": 143011,
+      "steps": 46,
+      "reward": -20.63296089942986,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 2.9336295937631895
+    },
+    {
+      "episode_index": 12,
+      "seed": 143012,
+      "steps": 46,
+      "reward": -8.805025409212407,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 1.9642089738406483
+    },
+    {
+      "episode_index": 13,
+      "seed": 143013,
+      "steps": 27,
+      "reward": 60.43833429748599,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 0.3901772804138316
+    },
+    {
+      "episode_index": 14,
+      "seed": 143014,
+      "steps": 16,
+      "reward": 55.00244192742983,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 0.4413616549815354
+    },
+    {
+      "episode_index": 15,
+      "seed": 143015,
+      "steps": 46,
+      "reward": -29.714919931158875,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 4.929850318493429
+    },
+    {
+      "episode_index": 16,
+      "seed": 143016,
+      "steps": 27,
+      "reward": 60.24491132109617,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 0.4351683591949234
+    },
+    {
+      "episode_index": 17,
+      "seed": 143017,
+      "steps": 46,
+      "reward": -20.92805522899285,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 3.2476459332096383
+    },
+    {
+      "episode_index": 18,
+      "seed": 143018,
+      "steps": 46,
+      "reward": -6.449171546849558,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 1.7704773818216184
+    },
+    {
+      "episode_index": 19,
+      "seed": 143019,
+      "steps": 46,
+      "reward": -2.5937599380447898,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 1.3536222061956116
+    },
+    {
+      "episode_index": 20,
+      "seed": 143020,
+      "steps": 46,
+      "reward": -9.376861626578245,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 1.817065696260741
+    },
+    {
+      "episode_index": 21,
+      "seed": 143021,
+      "steps": 46,
+      "reward": -25.306053816505703,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 3.0065693312509714
+    },
+    {
+      "episode_index": 22,
+      "seed": 143022,
+      "steps": 46,
+      "reward": -26.822091237258935,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 4.6788216098644
+    },
+    {
+      "episode_index": 23,
+      "seed": 143023,
+      "steps": 46,
+      "reward": -16.13632569760057,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 2.5083751534924987
+    },
+    {
+      "episode_index": 24,
+      "seed": 143024,
+      "steps": 46,
+      "reward": -19.324150704678274,
+      "success": false,
+      "terminated": true,
+      "truncated": false,
+      "final_distance_xy_m": 2.70283046340936
+    }
+  ]
+}

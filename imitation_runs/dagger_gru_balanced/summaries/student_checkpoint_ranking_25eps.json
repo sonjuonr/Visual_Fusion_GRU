@@ -1,0 +1,146 @@
+[
+  {
+    "policy_path": "imitation_runs/dagger_gru_balanced/checkpoints/student_iter_08.pt",
+    "summary_path": "imitation_runs/dagger_gru_balanced/summaries/eval_iter_08.json",
+    "success_rate": 0.96,
+    "mean_reward": 54.91525999535033,
+    "mean_steps": 28.92,
+    "episodes": 25,
+    "action_histogram": {
+      "0": 396,
+      "1": 44,
+      "2": 283
+    },
+    "forward_ratio": 0.5477178423236515,
+    "left_ratio": 0.06085753803596127,
+    "right_ratio": 0.3914246196403873,
+    "timeouts": 0,
+    "terminated_failures": 1
+  },
+  {
+    "policy_path": "imitation_runs/dagger_gru_balanced/checkpoints/student_iter_03.pt",
+    "summary_path": "imitation_runs/dagger_gru_balanced/summaries/eval_iter_03.json",
+    "success_rate": 0.32,
+    "mean_reward": 8.775150162302703,
+    "mean_steps": 42.76,
+    "episodes": 25,
+    "action_histogram": {
+      "0": 830,
+      "1": 49,
+      "2": 190
+    },
+    "forward_ratio": 0.7764265668849392,
+    "left_ratio": 0.04583723105706267,
+    "right_ratio": 0.17773620205799812,
+    "timeouts": 0,
+    "terminated_failures": 17
+  },
+  {
+    "policy_path": "imitation_runs/dagger_gru_balanced/checkpoints/student_iter_07.pt",
+    "summary_path": "imitation_runs/dagger_gru_balanced/summaries/eval_iter_07.json",
+    "success_rate": 0.28,
+    "mean_reward": 27.646652489594402,
+    "mean_steps": 473.08,
+    "episodes": 25,
+    "action_histogram": {
+      "0": 127,
+      "1": 51,
+      "2": 11649
+    },
+    "forward_ratio": 0.010738141540542825,
+    "left_ratio": 0.004312167075336095,
+    "right_ratio": 0.984949691384121,
+    "timeouts": 18,
+    "terminated_failures": 0
+  },
+  {
+    "policy_path": "imitation_runs/dagger_gru_balanced/checkpoints/student_iter_05.pt",
+    "summary_path": "imitation_runs/dagger_gru_balanced/summaries/eval_iter_05.json",
+    "success_rate": 0.28,
+    "mean_reward": 7.761231369551081,
+    "mean_steps": 37.08,
+    "episodes": 25,
+    "action_histogram": {
+      "0": 718,
+      "1": 63,
+      "2": 146
+    },
+    "forward_ratio": 0.7745415318230853,
+    "left_ratio": 0.06796116504854369,
+    "right_ratio": 0.1574973031283711,
+    "timeouts": 0,
+    "terminated_failures": 18
+  },
+  {
+    "policy_path": "imitation_runs/dagger_gru_balanced/checkpoints/student_iter_04.pt",
+    "summary_path": "imitation_runs/dagger_gru_balanced/summaries/eval_iter_04.json",
+    "success_rate": 0.24,
+    "mean_reward": -0.8280943441128489,
+    "mean_steps": 44.92,
+    "episodes": 25,
+    "action_histogram": {
+      "0": 868,
+      "1": 50,
+      "2": 205
+    },
+    "forward_ratio": 0.7729296527159395,
+    "left_ratio": 0.04452359750667854,
+    "right_ratio": 0.182546749777382,
+    "timeouts": 0,
+    "terminated_failures": 19
+  },
+  {
+    "policy_path": "imitation_runs/dagger_gru_balanced/checkpoints/student_iter_01.pt",
+    "summary_path": "imitation_runs/dagger_gru_balanced/summaries/eval_iter_01.json",
+    "success_rate": 0.2,
+    "mean_reward": -0.8606927285416174,
+    "mean_steps": 42.0,
+    "episodes": 25,
+    "action_histogram": {
+      "0": 825,
+      "1": 50,
+      "2": 175
+    },
+    "forward_ratio": 0.7857142857142857,
+    "left_ratio": 0.047619047619047616,
+    "right_ratio": 0.16666666666666666,
+    "timeouts": 0,
+    "terminated_failures": 20
+  },
+  {
+    "policy_path": "imitation_runs/dagger_gru_balanced/checkpoints/student_iter_06.pt",
+    "summary_path": "imitation_runs/dagger_gru_balanced/summaries/eval_iter_06.json",
+    "success_rate": 0.12,
+    "mean_reward": -10.560096872867543,
+    "mean_steps": 53.64,
+    "episodes": 25,
+    "action_histogram": {
+      "0": 791,
+      "1": 75,
+      "2": 475
+    },
+    "forward_ratio": 0.5898583146905294,
+    "left_ratio": 0.05592841163310962,
+    "right_ratio": 0.3542132736763609,
+    "timeouts": 0,
+    "terminated_failures": 22
+  },
+  {
+    "policy_path": "imitation_runs/dagger_gru_balanced/checkpoints/student_iter_02.pt",
+    "summary_path": "imitation_runs/dagger_gru_balanced/summaries/eval_iter_02.json",
+    "success_rate": 0.08,
+    "mean_reward": -11.448215193354207,
+    "mean_steps": 48.92,
+    "episodes": 25,
+    "action_histogram": {
+      "0": 973,
+      "1": 50,
+      "2": 200
+    },
+    "forward_ratio": 0.7955846279640229,
+    "left_ratio": 0.04088307440719542,
+    "right_ratio": 0.1635322976287817,
+    "timeouts": 0,
+    "terminated_failures": 23
+  }
+]

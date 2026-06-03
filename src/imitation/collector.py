@@ -30,6 +30,18 @@ def _scenario_positions(env) -> dict[str, np.ndarray]:
 
 def _build_collection_plan(config: CollectionConfig, env) -> list[dict[str, object]]:
     plan_mode = str(config.scenario_plan).strip().lower()
+    if plan_mode in {"seed_list", "explicit_seeds", "hard_seeds"}:
+        if not config.explicit_seeds:
+            raise ValueError("CollectionConfig.explicit_seeds must be set for seed-list collection.")
+        return [
+            {
+                "seed": int(seed),
+                "scenario_name": "failed_seed",
+                "reset_options": None,
+            }
+            for seed in config.explicit_seeds
+        ]
+
     if plan_mode == "random":
         return [
             {
@@ -76,7 +88,7 @@ def _build_collection_plan(config: CollectionConfig, env) -> list[dict[str, obje
     else:
         raise ValueError(
             f"Unsupported collection scenario_plan: {config.scenario_plan}. "
-            "Use 'random', 'balanced', 'in_view', 'out_of_view', or 'custom'."
+            "Use 'random', 'balanced', 'in_view', 'out_of_view', 'custom', or 'seed_list'."
         )
 
     if not plan:

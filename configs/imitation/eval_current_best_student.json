@@ -1,0 +1,21 @@
+{
+  "env": {
+    "instruction_text": "Find the red ball",
+    "semantic_backend_mode": "clip",
+    "fusion_alpha": 1.0,
+    "clip_required": true,
+    "clip_local_files_only": true,
+    "semantic_update_interval_steps": 1,
+    "action_repeat_steps": 6,
+    "renderer": "HydraStorm",
+    "headless": true
+  },
+  "policy_type": "torch_student",
+  "policy_path": "models/student_gru_hard_cases_radius1_seed601000.pt",
+  "policy_algorithm": "recurrent_ppo",
+  "observation_view_name": "clip",
+  "episodes": 1000,
+  "start_seed": 601000,
+  "deterministic": true,
+  "output_path": "imitation_data/eval/current_best_student_1000eps.json"
+}

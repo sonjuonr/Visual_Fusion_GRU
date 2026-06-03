@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from imitation.models import HeatmapActionMLP
+from imitation.models import build_heatmap_action_model
 
 
 class PolicyAdapter:
@@ -61,16 +61,25 @@ class TorchStudentPolicyAdapter(PolicyAdapter):
     def __init__(self, checkpoint_path: str, deterministic: bool = True, device: str = "cpu") -> None:
         checkpoint = torch.load(Path(checkpoint_path), map_location=device)
         model_config = checkpoint["model_config"]
-        self._model = HeatmapActionMLP(**model_config)
+        self._model_type = str(checkpoint.get("model_type", "mlp")).strip().lower()
+        self._model = build_heatmap_action_model(self._model_type, model_config)
         self._model.load_state_dict(checkpoint["model_state_dict"])
         self._model.to(device)
         self._model.eval()
         self._device = torch.device(device)
         self.deterministic = bool(deterministic)
+        self._hidden_state = None
+
+    def reset(self) -> None:
+        self._hidden_state = None
 
     def predict(self, observation: np.ndarray) -> int:
         obs = torch.as_tensor(np.asarray(observation, dtype=np.float32), device=self._device).reshape(1, -1)
         with torch.inference_mode():
-            logits = self._model(obs)
+            if self._model_type == "gru":
+                logits_seq, self._hidden_state = self._model(obs, self._hidden_state)
+                logits = logits_seq[:, -1, :]
+            else:
+                logits = self._model(obs)
             action = int(torch.argmax(logits, dim=-1).item())
         return action

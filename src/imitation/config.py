@@ -89,6 +89,7 @@ class CollectionConfig:
     runs_per_scenario: int = 1
     in_view_runs: int = 0
     out_of_view_runs: int = 0
+    explicit_seeds: list[int] = field(default_factory=list)
 
 
 @dataclass(frozen=True)
@@ -100,8 +101,19 @@ class ModelConfig:
 
 
 @dataclass(frozen=True)
+class RecurrentModelConfig:
+    input_dim: int = VLA_CONFIG.heatmap_height * VLA_CONFIG.heatmap_width
+    hidden_dim: int = 128
+    num_layers: int = 1
+    dropout: float = 0.0
+    mlp_hidden_dims: list[int] = field(default_factory=lambda: [128])
+    activation: str = "relu"
+
+
+@dataclass(frozen=True)
 class StudentBCConfig:
-    model: ModelConfig = field(default_factory=ModelConfig)
+    model_type: str = "mlp"
+    model: ModelConfig | RecurrentModelConfig = field(default_factory=ModelConfig)
     dataset_paths: list[str] = field(default_factory=list)
     output_path: str = "models/student_bc.pt"
     resume_from: str | None = None
@@ -118,6 +130,8 @@ class StudentBCConfig:
     tb_run_name: str = "fish_imitation_student_bc"
     checkpoint_dir: str = "checkpoints/imitation"
     checkpoint_every_epochs: int = 5
+    sequence_length: int = 16
+    sequence_stride: int = 4
 
 
 @dataclass(frozen=True)
@@ -144,6 +158,12 @@ class DaggerConfig:
     beta_end: float = 0.0
     resume_student_from_previous: bool = True
     evaluate_episodes: int = 10
+    scenario_plan: str = "random"
+    in_view_runs_per_iteration: int = 0
+    out_of_view_runs_per_iteration: int = 0
+    scenario_names: list[str] = field(default_factory=list)
+    runs_per_scenario: int = 1
+    seed_stride: int = 1
 
 
 @dataclass(frozen=True)
@@ -194,6 +214,12 @@ def dataclass_from_dict(cls: type[T], payload: dict[str, Any]) -> T:
     unknown_keys = sorted(set(payload) - known_fields)
     if unknown_keys:
         raise KeyError(f"Unknown keys for {cls.__name__}: {unknown_keys}")
+
+    if cls is StudentBCConfig and isinstance(payload.get("model"), dict):
+        model_type = str(payload.get("model_type", "mlp")).strip().lower()
+        model_cls = RecurrentModelConfig if model_type == "gru" else ModelConfig
+        payload = dict(payload)
+        payload["model"] = dataclass_from_dict(model_cls, payload["model"])
 
     kwargs: dict[str, Any] = {}
     for item in fields(cls):

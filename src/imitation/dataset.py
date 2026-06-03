@@ -89,3 +89,66 @@ class HeatmapActionDataset(Dataset):
 
     def __getitem__(self, index: int) -> tuple[torch.Tensor, torch.Tensor]:
         return self.observations[index], self.actions[index]
+
+
+class HeatmapActionSequenceDataset(Dataset):
+    def __init__(
+        self,
+        observations: np.ndarray,
+        actions: np.ndarray,
+        episode_keys: np.ndarray,
+        step_indices: np.ndarray,
+        sequence_length: int,
+        stride: int = 1,
+    ) -> None:
+        self.observations = torch.from_numpy(np.asarray(observations, dtype=np.float32))
+        self.actions = torch.from_numpy(np.asarray(actions, dtype=np.int64))
+        self.sequence_length = int(sequence_length)
+        self.windows: list[np.ndarray] = []
+
+        if self.sequence_length <= 0:
+            raise ValueError("sequence_length must be positive.")
+
+        stride_int = max(1, int(stride))
+        keys = np.asarray(episode_keys)
+        steps = np.asarray(step_indices, dtype=np.int64)
+        for key in np.unique(keys):
+            indices = np.flatnonzero(keys == key)
+            indices = indices[np.argsort(steps[indices])]
+            if len(indices) == 0:
+                continue
+            if len(indices) <= self.sequence_length:
+                pad_count = self.sequence_length - len(indices)
+                if pad_count > 0:
+                    indices = np.concatenate(
+                        [
+                            np.full((pad_count,), indices[0], dtype=indices.dtype),
+                            indices,
+                        ]
+                    )
+                self.windows.append(indices)
+                continue
+            last_start = len(indices) - self.sequence_length
+            for start in range(0, last_start + 1, stride_int):
+                self.windows.append(indices[start : start + self.sequence_length])
+            if self.windows[-1][-1] != indices[-1]:
+                self.windows.append(indices[-self.sequence_length :])
+
+        if not self.windows:
+            raise ValueError("No sequence windows could be built from rollout data.")
+
+    def __len__(self) -> int:
+        return len(self.windows)
+
+    def __getitem__(self, index: int) -> tuple[torch.Tensor, torch.Tensor]:
+        window = self.windows[index]
+        return self.observations[window], self.actions[window]
+
+
+def build_episode_keys(arrays: dict[str, np.ndarray]) -> np.ndarray:
+    required = ("iteration_index", "seed", "episode_index")
+    missing = [key for key in required if key not in arrays]
+    if missing:
+        raise KeyError(f"Cannot build sequence dataset; missing keys: {missing}")
+    parts = [np.asarray(arrays[key]).astype(np.int64) for key in required]
+    return np.asarray([f"{it}:{seed}:{ep}" for it, seed, ep in zip(*parts)], dtype=np.str_)
