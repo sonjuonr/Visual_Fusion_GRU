@@ -25,7 +25,28 @@ class PdfCanvas:
 
     def text(self, x: float, y: float, text: str, size: int = 12, bold: bool = False) -> None:
         font = "F2" if bold else "F1"
-        self.ops.append(f"BT /{font} {size} Tf {x:.2f} {y:.2f} Td ({_pdf_escape(text)}) Tj ET\n")
+        self.ops.append(f"0 0 0 rg BT /{font} {size} Tf {x:.2f} {y:.2f} Td ({_pdf_escape(text)}) Tj ET\n")
+
+    def text_center(self, x: float, y: float, text: str, size: int = 12, bold: bool = False) -> None:
+        approx_width = len(text) * size * 0.27
+        self.text(x - approx_width, y, text, size=size, bold=bold)
+
+    def box(
+        self,
+        x: float,
+        y: float,
+        w: float,
+        h: float,
+        title: str,
+        lines: list[str],
+        fill: tuple[float, float, float],
+        border: tuple[float, float, float],
+    ) -> None:
+        self.rect(x, y, w, h, fill)
+        self.stroke_rect(x, y, w, h, color=border)
+        self.text(x + 12, y + h - 22, title, 12, bold=True)
+        for idx, line in enumerate(lines):
+            self.text(x + 12, y + h - 42 - idx * 16, line, 9)
 
     def rect(self, x: float, y: float, w: float, h: float, fill: tuple[float, float, float]) -> None:
         r, g, b = fill
@@ -123,31 +144,65 @@ def make_success_ladder() -> None:
 
 
 def make_pipeline() -> None:
-    canvas = PdfCanvas(OUT_DIR / "training_pipeline.pdf", 760, 340)
-    canvas.text(32, 300, "Training Pipeline Used in Visual-Fusion-GRU", 17, bold=True)
+    canvas = PdfCanvas(OUT_DIR / "training_pipeline.pdf", 840, 420)
+    canvas.text(34, 382, "Research Pipeline: From RL Diagnosis to Pure-CLIP GRU Student", 17, bold=True)
+    canvas.text(34, 360, "Top row: original RL migration. Bottom row: final imitation-learning route.", 10)
+    blue_fill = (0.91, 0.95, 0.98)
+    green_fill = (0.91, 0.97, 0.92)
+    red_fill = (0.98, 0.91, 0.90)
+    border = (0.12, 0.32, 0.46)
     boxes = [
-        (35, 195, 120, 66, "Isaac Sim", "fish + target"),
-        (190, 195, 130, 66, "Fallback RL", "color heatmap"),
-        (360, 195, 130, 66, "Alpha Fusion", "CLIP + fallback"),
-        (535, 195, 170, 66, "RL Choke Point", "alpha 0.993"),
-        (190, 75, 130, 66, "Teacher Labels", "fallback policy"),
-        (360, 75, 130, 66, "GRU DAgger", "CLIP sequence"),
-        (535, 75, 170, 66, "Hard-case Tuning", "95.7% success"),
+        (35, 245, 135, 74, "Isaac Sim", ["robotic fish", "red target"]),
+        (205, 245, 145, 74, "Fallback RL", ["color heatmap", "stable teacher"]),
+        (385, 245, 150, 74, "Alpha Fusion", ["alpha * CLIP", "+ fallback"]),
+        (570, 245, 210, 74, "RL Bottleneck", ["alpha 0.993", "0.007 fallback still matters"]),
+        (205, 95, 145, 74, "Teacher Labels", ["fallback actions", "student states"]),
+        (385, 95, 150, 74, "GRU DAgger", ["CLIP heatmap", "temporal memory"]),
+        (570, 95, 210, 74, "Hard-Case Tuning", ["radius-1 failed seeds", "0.957 over 1000 eps"]),
     ]
-    fill = (0.92, 0.95, 0.97)
-    accent = (0.13, 0.38, 0.55)
-    for x, y, w, h, title, subtitle in boxes:
-        canvas.rect(x, y, w, h, fill)
-        canvas.stroke_rect(x, y, w, h, color=accent)
-        canvas.text(x + 12, y + 39, title, 12, bold=True)
-        canvas.text(x + 12, y + 20, subtitle, 10)
-    canvas.arrow(155, 228, 190, 228)
-    canvas.arrow(320, 228, 360, 228)
-    canvas.arrow(490, 228, 535, 228)
-    canvas.arrow(255, 195, 255, 141)
-    canvas.arrow(320, 108, 360, 108)
-    canvas.arrow(490, 108, 535, 108)
-    canvas.text(34, 36, "The deployed student uses pure CLIP observations; fallback is retained as teacher and diagnostic signal.", 10)
+    for idx, (x, y, w, h, title, lines) in enumerate(boxes):
+        fill = red_fill if title == "RL Bottleneck" else green_fill if y < 200 else blue_fill
+        canvas.box(x, y, w, h, title, lines, fill, border)
+    canvas.arrow(170, 282, 205, 282)
+    canvas.arrow(350, 282, 385, 282)
+    canvas.arrow(535, 282, 570, 282)
+    canvas.arrow(277, 245, 277, 169)
+    canvas.arrow(350, 132, 385, 132)
+    canvas.arrow(535, 132, 570, 132)
+    canvas.text(35, 46, "Final deployment path: pure CLIP observation -> GRU student -> forward / left / right action.", 10, bold=True)
+    canvas.save()
+
+
+def make_imitation_structure() -> None:
+    canvas = PdfCanvas(OUT_DIR / "imitation_learning_structure.pdf", 860, 430)
+    canvas.text(32, 392, "Imitation-Learning Structure: BC to DAgger to GRU DAgger", 17, bold=True)
+    canvas.text(32, 370, "The fallback policy labels student observations; each stage fixes a specific failure mode.", 10)
+    border = (0.11, 0.31, 0.48)
+    fill_seed = (0.93, 0.95, 0.98)
+    fill_stage = (0.91, 0.97, 0.92)
+    fill_best = (0.89, 0.95, 0.96)
+    fill_warn = (0.98, 0.94, 0.86)
+
+    canvas.box(35, 245, 155, 82, "Seed Dataset", ["360 episodes", "11720 labels"], fill_seed, border)
+    canvas.box(230, 245, 155, 82, "BC Student", ["MLP baseline", "0.15 success"], fill_warn, border)
+    canvas.box(425, 245, 155, 82, "MLP DAgger", ["off-policy states", "0.66 success"], fill_stage, border)
+    canvas.box(620, 245, 180, 82, "GRU DAgger", ["sequence length 16", "0.883 over 1000 eps"], fill_stage, border)
+
+    canvas.box(230, 95, 155, 82, "Failed Seeds", ["119 hard seeds", "teacher relabel"], fill_seed, border)
+    canvas.box(425, 95, 155, 82, "Hard-Case GRU", ["0.942-0.946", "1000-episode sweeps"], fill_stage, border)
+    canvas.box(620, 95, 180, 82, "Radius-1 GRU", ["299 targeted eps", "0.957 final result"], fill_best, border)
+
+    canvas.arrow(190, 286, 230, 286)
+    canvas.arrow(385, 286, 425, 286)
+    canvas.arrow(580, 286, 620, 286)
+    canvas.arrow(710, 245, 308, 177)
+    canvas.arrow(385, 136, 425, 136)
+    canvas.arrow(580, 136, 620, 136)
+
+    canvas.text(58, 207, "BC learns teacher states.", 9)
+    canvas.text(238, 207, "DAgger labels states visited by the student.", 9)
+    canvas.text(615, 207, "GRU adds memory for target-loss recovery.", 9)
+    canvas.text(34, 48, "Final training summary: 73737 labeled records from seed, balanced DAgger, and radius-1 hard-case datasets.", 10, bold=True)
     canvas.save()
 
 
@@ -155,6 +210,7 @@ def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     make_success_ladder()
     make_pipeline()
+    make_imitation_structure()
 
 
 if __name__ == "__main__":

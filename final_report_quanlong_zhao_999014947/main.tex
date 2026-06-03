@@ -21,12 +21,13 @@
 \renewcommand{\arraystretch}{1.15}
 
 \newcommand{\projectname}{Visual-Fusion-GRU}
+\newcommand{\projecttitle}{VLA Robotic Fish: Underwater Target Navigation with Visual Fusion and GRU Imitation}
 \newcommand{\studentname}{Quanlong Zhao}
 \newcommand{\studentid}{999014947}
 \newcommand{\successbest}{95.7\%}
 
-\title{\textbf{\projectname: Final Project Report}\\
-\large SLA-Aware Underwater VLA Navigation with RL, CLIP Heatmaps, GRU Imitation, and Hard-Case DAgger}
+\title{\textbf{\projecttitle}\\
+\large Final Report for \projectname}
 \author{\studentname\\Student ID: \studentid}
 \date{June 2026}
 
@@ -35,11 +36,11 @@
 \begin{titlepage}
 \centering
 \vspace*{0.75in}
-{\Huge \textbf{\projectname}\par}
+{\Huge \textbf{VLA Robotic Fish}\par}
 \vspace{0.2in}
-{\Large Final Project Report\par}
+{\Large Underwater Target Navigation with Visual Fusion and GRU Imitation\par}
 \vspace{0.15in}
-{\large SLA-Aware Underwater VLA Navigation with RL, CLIP Heatmaps, GRU Imitation, and Hard-Case DAgger\par}
+{\large Final Report for \projectname\par}
 \vspace{0.6in}
 {\Large \studentname\par}
 {\large Student ID: \studentid\par}
@@ -62,8 +63,8 @@ hard-case DAgger fine-tuning.
 \section{Abstract}
 
 This report describes the design, training history, and final experimental
-outcome of \projectname, a GitHub-ready underwater navigation project for an
-autonomous robotic fish in NVIDIA Isaac Sim. The project goal is a
+outcome of \textit{\projecttitle}, the GitHub-ready \projectname\ project for
+an autonomous robotic fish in NVIDIA Isaac Sim. The project goal is a
 Vision-Language-Action (VLA) style policy: given an instruction such as
 \texttt{Find the red ball}, the robot should ground the instruction in camera
 observations and choose low-level swimming actions. The work began with
@@ -92,10 +93,45 @@ The GitHub package is stored in:
 \path{/home/quanlong/isaac-sim/Visual_Fusion_GRU_github}
 \end{center}
 
+The uploaded repository is:
+
+\begin{center}
+\url{https://github.com/sonjuonr/Visual_Fusion_GRU}
+\end{center}
+
 The repository is curated from a larger Isaac Sim workspace. It contains source
 code, model checkpoints, configs, evaluation summaries, monitor logs, DAgger
-datasets, and upload notes. The full Isaac Sim installation and local
-TensorBoard event folders are not intended to be the core public artifact.
+datasets, report files, and upload notes. The full Isaac Sim installation and
+local TensorBoard event folders are not intended to be the core public
+artifact.
+
+\subsection{GitHub Package Structure}
+
+The report follows the same structure that was uploaded to GitHub. The main
+public package is organized as:
+
+{\small
+\begin{verbatim}
+Visual_Fusion_GRU/
+  README.md
+  requirements.txt
+  src/                         Environment, VLA, RL, and IL source code
+  src/imitation/               BC, DAgger, dataset, policy, model modules
+  configs/imitation/           Teacher, BC, DAgger, GRU, evaluation configs
+  scripts/                     Training, evaluation, and release helpers
+  models/                      Compact model checkpoints and run configs
+  monitor_logs/                RL and fallback teacher monitor CSV logs
+  imitation_data/              Teacher seed datasets and eval summaries
+  imitation_runs/              DAgger datasets, checkpoints, run summaries
+  artifacts_manifest/          Included files and excluded checkpoint lists
+  docs/                        GitHub upload notes, assets, next experiments
+  final_report_quanlong_zhao_999014947/
+    main.tex
+    Quanlong_Zhao_999014947_Final_Report.pdf
+    figures/
+    build_figures.py
+\end{verbatim}
+}
 
 \begin{figure}[htbp]
 \centering
@@ -249,8 +285,8 @@ off-trajectory recovery states?
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.92\linewidth]{figures/training_pipeline.pdf}
-\caption{Training pipeline: RL exposed the semantic-control bottleneck, then imitation learning used the fallback policy as teacher and trained a pure-CLIP GRU student.}
+\includegraphics[width=0.98\linewidth]{figures/training_pipeline.pdf}
+\caption{Research pipeline: the original RL alpha-fusion route exposed the semantic-control bottleneck, then the project moved to a pure-CLIP GRU imitation route.}
 \label{fig:pipeline}
 \end{figure}
 
@@ -304,6 +340,13 @@ Key settings were:
 
 The balanced scenario plan was important. It forced DAgger to collect both
 normal visible-target tracking states and harder target-loss/search states.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.98\linewidth]{figures/imitation_learning_structure.pdf}
+\caption{Imitation-learning structure from BC to MLP DAgger to GRU DAgger and hard-case GRU fine-tuning.}
+\label{fig:imitation-structure}
+\end{figure}
 
 \section{GRU Student Model}
 
@@ -576,6 +619,7 @@ baseline for future experiments.
 \textbf{Artifact} & \textbf{Path} \\
 \midrule
 \endhead
+GitHub repository & \url{https://github.com/sonjuonr/Visual_Fusion_GRU} \\
 Current best public checkpoint & \path{models/student_gru_hard_cases_radius1_seed601000.pt} \\
 Original best checkpoint & \path{imitation_runs/dagger_gru_hard_cases_radius1_seed601000/checkpoints/student_hard_seed.pt} \\
 Best model note & \path{models/CURRENT_BEST_STUDENT.md} \\
@@ -600,6 +644,7 @@ This report folder contains:
   \item \path{Quanlong_Zhao_999014947_Final_Report.pdf}: compiled PDF.
   \item \path{figures/current_student_simulation.png}: simulation screenshot.
   \item \path{figures/training_pipeline.pdf}: generated pipeline figure.
+  \item \path{figures/imitation_learning_structure.pdf}: generated BC-to-DAgger-to-GRU structure figure.
   \item \path{figures/success_rate_ladder.pdf}: generated result ladder.
   \item \path{build_figures.py}: script used to regenerate the vector figures.
 \end{itemize}

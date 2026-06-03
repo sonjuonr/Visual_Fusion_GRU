@@ -4,6 +4,12 @@ Student: Quanlong Zhao
 
 Student ID: 999014947
 
+GitHub repository: https://github.com/sonjuonr/Visual_Fusion_GRU
+
+Report title:
+
+`VLA Robotic Fish: Underwater Target Navigation with Visual Fusion and GRU Imitation`
+
 Main files:
 
 - `main.tex`: LaTeX source for the final report.

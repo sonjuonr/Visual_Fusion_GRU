@@ -1,0 +1,87 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 860 430] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Length 3463 >>
+stream
+0 0 0 rg BT /F2 17 Tf 32.00 392.00 Td (Imitation-Learning Structure: BC to DAgger to GRU DAgger) Tj ET
+0 0 0 rg BT /F1 10 Tf 32.00 370.00 Td (The fallback policy labels student observations; each stage fixes a specific failure mode.) Tj ET
+0.930 0.950 0.980 rg 35.00 245.00 155.00 82.00 re f
+0.110 0.310 0.480 RG 35.00 245.00 155.00 82.00 re S
+0 0 0 rg BT /F2 12 Tf 47.00 305.00 Td (Seed Dataset) Tj ET
+0 0 0 rg BT /F1 9 Tf 47.00 285.00 Td (360 episodes) Tj ET
+0 0 0 rg BT /F1 9 Tf 47.00 269.00 Td (11720 labels) Tj ET
+0.980 0.940 0.860 rg 230.00 245.00 155.00 82.00 re f
+0.110 0.310 0.480 RG 230.00 245.00 155.00 82.00 re S
+0 0 0 rg BT /F2 12 Tf 242.00 305.00 Td (BC Student) Tj ET
+0 0 0 rg BT /F1 9 Tf 242.00 285.00 Td (MLP baseline) Tj ET
+0 0 0 rg BT /F1 9 Tf 242.00 269.00 Td (0.15 success) Tj ET
+0.910 0.970 0.920 rg 425.00 245.00 155.00 82.00 re f
+0.110 0.310 0.480 RG 425.00 245.00 155.00 82.00 re S
+0 0 0 rg BT /F2 12 Tf 437.00 305.00 Td (MLP DAgger) Tj ET
+0 0 0 rg BT /F1 9 Tf 437.00 285.00 Td (off-policy states) Tj ET
+0 0 0 rg BT /F1 9 Tf 437.00 269.00 Td (0.66 success) Tj ET
+0.910 0.970 0.920 rg 620.00 245.00 180.00 82.00 re f
+0.110 0.310 0.480 RG 620.00 245.00 180.00 82.00 re S
+0 0 0 rg BT /F2 12 Tf 632.00 305.00 Td (GRU DAgger) Tj ET
+0 0 0 rg BT /F1 9 Tf 632.00 285.00 Td (sequence length 16) Tj ET
+0 0 0 rg BT /F1 9 Tf 632.00 269.00 Td (0.883 over 1000 eps) Tj ET
+0.930 0.950 0.980 rg 230.00 95.00 155.00 82.00 re f
+0.110 0.310 0.480 RG 230.00 95.00 155.00 82.00 re S
+0 0 0 rg BT /F2 12 Tf 242.00 155.00 Td (Failed Seeds) Tj ET
+0 0 0 rg BT /F1 9 Tf 242.00 135.00 Td (119 hard seeds) Tj ET
+0 0 0 rg BT /F1 9 Tf 242.00 119.00 Td (teacher relabel) Tj ET
+0.910 0.970 0.920 rg 425.00 95.00 155.00 82.00 re f
+0.110 0.310 0.480 RG 425.00 95.00 155.00 82.00 re S
+0 0 0 rg BT /F2 12 Tf 437.00 155.00 Td (Hard-Case GRU) Tj ET
+0 0 0 rg BT /F1 9 Tf 437.00 135.00 Td (0.942-0.946) Tj ET
+0 0 0 rg BT /F1 9 Tf 437.00 119.00 Td (1000-episode sweeps) Tj ET
+0.890 0.950 0.960 rg 620.00 95.00 180.00 82.00 re f
+0.110 0.310 0.480 RG 620.00 95.00 180.00 82.00 re S
+0 0 0 rg BT /F2 12 Tf 632.00 155.00 Td (Radius-1 GRU) Tj ET
+0 0 0 rg BT /F1 9 Tf 632.00 135.00 Td (299 targeted eps) Tj ET
+0 0 0 rg BT /F1 9 Tf 632.00 119.00 Td (0.957 final result) Tj ET
+0.100 0.100 0.100 RG 1.40 w 190.00 286.00 m 230.00 286.00 l S
+0.100 0.100 0.100 rg 230.00 286.00 m 221.00 291.00 l 221.00 281.00 l h f
+0.100 0.100 0.100 RG 1.40 w 385.00 286.00 m 425.00 286.00 l S
+0.100 0.100 0.100 rg 425.00 286.00 m 416.00 291.00 l 416.00 281.00 l h f
+0.100 0.100 0.100 RG 1.40 w 580.00 286.00 m 620.00 286.00 l S
+0.100 0.100 0.100 rg 620.00 286.00 m 611.00 291.00 l 611.00 281.00 l h f
+0.100 0.100 0.100 RG 1.40 w 710.00 245.00 m 308.00 177.00 l S
+0.100 0.100 0.100 rg 308.00 177.00 m 317.00 182.00 l 317.00 172.00 l h f
+0.100 0.100 0.100 RG 1.40 w 385.00 136.00 m 425.00 136.00 l S
+0.100 0.100 0.100 rg 425.00 136.00 m 416.00 141.00 l 416.00 131.00 l h f
+0.100 0.100 0.100 RG 1.40 w 580.00 136.00 m 620.00 136.00 l S
+0.100 0.100 0.100 rg 620.00 136.00 m 611.00 141.00 l 611.00 131.00 l h f
+0 0 0 rg BT /F1 9 Tf 58.00 207.00 Td (BC learns teacher states.) Tj ET
+0 0 0 rg BT /F1 9 Tf 238.00 207.00 Td (DAgger labels states visited by the student.) Tj ET
+0 0 0 rg BT /F1 9 Tf 615.00 207.00 Td (GRU adds memory for target-loss recovery.) Tj ET
+0 0 0 rg BT /F2 10 Tf 34.00 48.00 Td (Final training summary: 73737 labeled records from seed, balanced DAgger, and radius-1 hard-case datasets.) Tj ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000000321 00000 n 
+0000000396 00000 n 
+trailer << /Size 7 /Root 1 0 R >>
+startxref
+3910
+%%EOF
