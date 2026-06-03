@@ -1,0 +1,76 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 760 340] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Length 2486 >>
+stream
+BT /F2 17 Tf 32.00 300.00 Td (Training Pipeline Used in Visual-Fusion-GRU) Tj ET
+0.920 0.950 0.970 rg 35.00 195.00 120.00 66.00 re f
+0.130 0.380 0.550 RG 35.00 195.00 120.00 66.00 re S
+BT /F2 12 Tf 47.00 234.00 Td (Isaac Sim) Tj ET
+BT /F1 10 Tf 47.00 215.00 Td (fish + target) Tj ET
+0.920 0.950 0.970 rg 190.00 195.00 130.00 66.00 re f
+0.130 0.380 0.550 RG 190.00 195.00 130.00 66.00 re S
+BT /F2 12 Tf 202.00 234.00 Td (Fallback RL) Tj ET
+BT /F1 10 Tf 202.00 215.00 Td (color heatmap) Tj ET
+0.920 0.950 0.970 rg 360.00 195.00 130.00 66.00 re f
+0.130 0.380 0.550 RG 360.00 195.00 130.00 66.00 re S
+BT /F2 12 Tf 372.00 234.00 Td (Alpha Fusion) Tj ET
+BT /F1 10 Tf 372.00 215.00 Td (CLIP + fallback) Tj ET
+0.920 0.950 0.970 rg 535.00 195.00 170.00 66.00 re f
+0.130 0.380 0.550 RG 535.00 195.00 170.00 66.00 re S
+BT /F2 12 Tf 547.00 234.00 Td (RL Choke Point) Tj ET
+BT /F1 10 Tf 547.00 215.00 Td (alpha 0.993) Tj ET
+0.920 0.950 0.970 rg 190.00 75.00 130.00 66.00 re f
+0.130 0.380 0.550 RG 190.00 75.00 130.00 66.00 re S
+BT /F2 12 Tf 202.00 114.00 Td (Teacher Labels) Tj ET
+BT /F1 10 Tf 202.00 95.00 Td (fallback policy) Tj ET
+0.920 0.950 0.970 rg 360.00 75.00 130.00 66.00 re f
+0.130 0.380 0.550 RG 360.00 75.00 130.00 66.00 re S
+BT /F2 12 Tf 372.00 114.00 Td (GRU DAgger) Tj ET
+BT /F1 10 Tf 372.00 95.00 Td (CLIP sequence) Tj ET
+0.920 0.950 0.970 rg 535.00 75.00 170.00 66.00 re f
+0.130 0.380 0.550 RG 535.00 75.00 170.00 66.00 re S
+BT /F2 12 Tf 547.00 114.00 Td (Hard-case Tuning) Tj ET
+BT /F1 10 Tf 547.00 95.00 Td (95.7% success) Tj ET
+0.100 0.100 0.100 RG 1.40 w 155.00 228.00 m 190.00 228.00 l S
+0.100 0.100 0.100 rg 190.00 228.00 m 181.00 233.00 l 181.00 223.00 l h f
+0.100 0.100 0.100 RG 1.40 w 320.00 228.00 m 360.00 228.00 l S
+0.100 0.100 0.100 rg 360.00 228.00 m 351.00 233.00 l 351.00 223.00 l h f
+0.100 0.100 0.100 RG 1.40 w 490.00 228.00 m 535.00 228.00 l S
+0.100 0.100 0.100 rg 535.00 228.00 m 526.00 233.00 l 526.00 223.00 l h f
+0.100 0.100 0.100 RG 1.40 w 255.00 195.00 m 255.00 141.00 l S
+0.100 0.100 0.100 rg 255.00 141.00 m 246.00 146.00 l 246.00 136.00 l h f
+0.100 0.100 0.100 RG 1.40 w 320.00 108.00 m 360.00 108.00 l S
+0.100 0.100 0.100 rg 360.00 108.00 m 351.00 113.00 l 351.00 103.00 l h f
+0.100 0.100 0.100 RG 1.40 w 490.00 108.00 m 535.00 108.00 l S
+0.100 0.100 0.100 rg 535.00 108.00 m 526.00 113.00 l 526.00 103.00 l h f
+BT /F1 10 Tf 34.00 36.00 Td (The deployed student uses pure CLIP observations; fallback is retained as teacher and diagnostic signal.) Tj ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000000321 00000 n 
+0000000396 00000 n 
+trailer << /Size 7 /Root 1 0 R >>
+startxref
+2933
+%%EOF
